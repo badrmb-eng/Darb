@@ -190,7 +190,7 @@ const T={
 en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The highway',world2:'World 2 · The corniche',locked:'Get 1 star on the World 1 boss run to unlock',write:'Write your answer here',paused:'Paused',resume:'Resume',home:'Home',retry:'Try again',next:'Next level',go:'GO!',oops:'Oops!',ready:'Ready?',lang:'عربي',of:n=>n+' of '+Q+' correct',
  titles:['Keep practising!','Good start!','Great job!','Amazing driving!'],soon:'Soon',play:'Play now',
  modes:['Highway math','Arabic letters','Souq change','English words'],
- slide:'Dugi\'s Big Slide',slideOpen:n=>n+' of 4 slide levels open',slideLock:'Finish a lesson to open level 1',
+ again:'Try again!',slide:'Dugi\'s Big Slide',slideOpen:n=>n+' of 4 slide levels open',slideLock:'Finish a lesson to open level 1',
  lv:['Add to 5','Add to 10','Take away','Mix to 10','Add to 20','Take away 20','Mix to 20','×2 ×5 ×10','Times tables','Boss run',
   'Add to 50','Take away 50','Mix to 50','×6 ×7','×8 ×9','All tables','Share by 2–5','Share by 2–10','× and ÷','Boss run'],
  teach:'Teach Darb your handwriting',teachAgain:'Teach Darb your handwriting again',teachSub:'Write each number the way you normally do.',clear:'Clear',nextD:'Next',later:'Later',parents:'Parents',gateT:'For grown-ups',gateQ:(a,b)=>'What is '+a+' × '+b+'?',check:'Check',pT:'Parent area',pTime:'Minutes played',pQ:'Questions answered',pAcc:'Correct',pDays:'Days played',pNeed:'Needs practice',pNone:'Nothing to practise yet.',pMissed:n=>'missed '+n+'×',pLevels:'Levels',pSet:'Settings',music:'Music',sfx:'Sound effects',unlock:'Unlock all levels',reteach:'Teach handwriting again',reset:'Reset all progress',resetSure:'Tap again to erase everything',close:'Close',on:'On',off:'Off',startPlay:'Start playing',times:(a,b)=>'Time '+a+' of '+b,tDone:'Done! Darb knows your handwriting now.',
@@ -198,7 +198,7 @@ en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The
 ar:{brand:'دَرب',tagline:'اكتب الإجابة… وواصل القيادة',world:'العالم ١ · الطريق السريع',world2:'العالم ٢ · الكورنيش',locked:'احصل على نجمة في جولة زعيم العالم ١ لفتح هذا العالم',write:'اكتب إجابتك هنا',paused:'توقف مؤقت',resume:'متابعة',home:'الرئيسية',retry:'حاول مرة أخرى',next:'المستوى التالي',go:'انطلق!',oops:'أوه!',ready:'مستعد؟',lang:'English',of:n=>num(n)+' من '+num(Q)+' صحيحة',
  titles:['واصل التدريب!','بداية جيدة!','عمل رائع!','قيادة مذهلة!'],soon:'قريبًا',play:'العب الآن',
  modes:['رياضيات الطريق','الحروف العربية','فكّة السوق','كلمات إنجليزية'],
- slide:'زلّاقة دوغي',slideOpen:n=>'مفتوح '+num(n)+' من '+num(4)+' مراحل',slideLock:'خلّص درسًا لتفتح المرحلة ١',
+ again:'حاول مرة ثانية!',slide:'زلّاقة دوغي',slideOpen:n=>'مفتوح '+num(n)+' من '+num(4)+' مراحل',slideLock:'خلّص درسًا لتفتح المرحلة ١',
  lv:['جمع حتى ٥','جمع حتى ١٠','طرح','مزيج حتى ١٠','جمع حتى ٢٠','طرح حتى ٢٠','مزيج حتى ٢٠','×٢ ×٥ ×١٠','جدول الضرب','جولة الزعيم',
   'جمع حتى ٥٠','طرح حتى ٥٠','مزيج حتى ٥٠','×٦ ×٧','×٨ ×٩','كل الجداول','قسمة على ٢–٥','قسمة على ٢–١٠','ضرب وقسمة','جولة الزعيم'],
  teach:'علّم اللعبة خطّك',teachAgain:'علّم اللعبة خطّك من جديد',teachSub:'اكتب كل رقم بالطريقة التي تكتبه بها عادةً.',clear:'مسح',nextD:'التالي',later:'لاحقاً',parents:'للوالدين',gateT:'للكبار فقط',gateQ:(a,b)=>'كم يساوي '+num(a)+' × '+num(b)+'؟',check:'تحقق',pT:'منطقة الوالدين',pTime:'دقائق اللعب',pQ:'أسئلة مُجابة',pAcc:'نسبة الصح',pDays:'أيام اللعب',pNeed:'يحتاج تدريب',pNone:'لا يوجد شيء يحتاج تدريباً بعد.',pMissed:n=>'أخطأ '+num(n)+' مرة',pLevels:'المستويات',pSet:'الإعدادات',music:'الموسيقى',sfx:'المؤثرات الصوتية',unlock:'فتح كل المستويات',reteach:'إعادة تعليم الخط',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',close:'إغلاق',on:'تشغيل',off:'إيقاف',startPlay:'ابدأ اللعب',times:(a,b)=>'المرة '+num(a)+' من '+num(b),tDone:'تمّ! اللعبة تعرف خطّك الآن.',
@@ -430,17 +430,25 @@ function readDigits(cs,want,padH){
     const isOne=L>12&&Math.hypot(dx,dy)/L>.9&&Math.abs(dy)>.5*Math.abs(dx);
     if(isDot)r=[{d:'0',v:0}];else if(isOne)r=[{d:'1',v:0}];else r=classify(c.list);
     if(r[0].v>1.85)unsure=true;
-    if(e!==undefined){const h=r.find(x=>x.d===e);if(h&&((h===r[0]&&h.v<=2.2)||(h.v<=1.3&&h.v<=r[0].v*1.08)))return e}return r[0].d}).join('');
+    if(e!==undefined){const h=r.find(x=>x.d===e);if(h){const k=r.indexOf(h);if((k===0&&h.v<=3)||(k<=1&&h.v<=2)||h.v<=r[0].v*1.3)return e}}return r[0].d}).join('');
   return{got,unsure};
 }
+function fitClusters(cs,n){cs=cs.map(c=>({list:c.list.slice(),a:c.a,b:c.b}));
+  while(cs.length>n){let bi=0,bg=1e9;for(let i=0;i<cs.length-1;i++){const g=cs[i+1].a-cs[i].b;if(g<bg){bg=g;bi=i}}const A=cs[bi],B=cs[bi+1];cs.splice(bi,2,{list:A.list.concat(B.list),a:Math.min(A.a,B.a),b:Math.max(A.b,B.b)})}
+  for(let g=0;g<4&&cs.length<n;g++){let bi=-1,bw=0;cs.forEach((c,i)=>{if(c.list.length>1&&c.b-c.a>bw){bw=c.b-c.a;bi=i}});if(bi<0)break;
+    const xs=cs[bi].list.map(s=>{let a=1e9,b=-1e9;s.forEach(p=>{a=Math.min(a,p.x);b=Math.max(b,p.x)});return{s,a,b,m:(a+b)/2}}).sort((p,q)=>p.m-q.m);let si=1,sg=-1;for(let i=1;i<xs.length;i++){const d=xs[i].m-xs[i-1].m;if(d>sg){sg=d;si=i}}
+    const mk=q=>({list:q.map(o=>o.s),a:Math.min(...q.map(o=>o.a)),b:Math.max(...q.map(o=>o.b))});cs.splice(bi,1,mk(xs.slice(0,si)),mk(xs.slice(si)))}
+  return cs}
 function readPad(final){
   if(st.phase!=='ask')return;const cs=clusters(strokes);if(!cs.length)return;
   const want=String(st.q.ans);
   const {got,unsure}=readDigits(cs,want,pad.clientHeight);
   if(got===want){setBox(num(got),'');judge(true);return}
+  if(cs.length!==want.length&&(final||cs.length>want.length)){const f=fitClusters(cs,want.length);if(f.length===want.length&&readDigits(f,want,pad.clientHeight).got===want){setBox(num(want),'');judge(true);return}}
   if(got.length<want.length&&want.startsWith(got)){setBox(num(got),'');return}
   if(!final){idleT=setTimeout(()=>readPad(true),1000);return}
   if(unsure)return;
+  if(!st.q.tried){st.q.tried=1;stamp(T[lang].again);beep(440,.08);clearPad();setBox('','');return}
   setBox(num(got),'');judge(false);
 }
 function clearPad(){strokes=[];cur=null;kbStr='';clearTimeout(idleT);$('#hint').style.display=kb?'none':'';drawPad()}
