@@ -430,6 +430,9 @@ function readDigits(cs,want,padH){
     const isOne=L>12&&Math.hypot(dx,dy)/L>.9&&Math.abs(dy)>.5*Math.abs(dx);
     if(isDot)r=[{d:'0',v:0}];else if(isOne)r=[{d:'1',v:0}];else r=classify(c.list);
     if(r[0].v>1.85)unsure=true;
+    if(e==='1'&&c.list.length<=2&&f.h>1.7*Math.max(f.w,4))return e;
+    if(e==='0'&&lang==='ar'&&['5','0'].includes(r[0].d))return e;
+    if(e==='0'&&lang==='en'&&['0','6','9','8'].includes(r[0].d)&&f.h<2.2*Math.max(f.w,4))return e;
     if(e!==undefined){const h=r.find(x=>x.d===e);if(h){const k=r.indexOf(h);if((k===0&&h.v<=3)||(k<=1&&h.v<=2)||h.v<=r[0].v*1.3)return e}}return r[0].d}).join('');
   return{got,unsure};
 }
