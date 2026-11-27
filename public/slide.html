@@ -76,7 +76,7 @@ h1{font-size:36px;line-height:1.02;font-weight:800;color:#0e4f7a}
   <div class="ar" dir="rtl">زلّاقة دوغي</div>
   <div class="lvls" id="levels"></div>
   <div class="hint"><span><b>Swipe</b> to steer</span><span><b>Tap</b> to jump</span><span><b>Grab</b> pearls</span></div>
-  <div class="tag">Finish lessons in Darb to open more levels.<br><span dir="rtl">خلّص دروس دَرب عشان تفتح مراحل جديدة.</span></div>
+  <div class="tag">Get 8 out of 10 in a Darb lesson to open each level.<br><span dir="rtl">جاوب ٨ من ١٠ في دروس دَرب عشان تفتح المراحل.</span></div>
   <a class="go w" href="index.html" style="display:block;text-decoration:none;line-height:54px;padding:0">&#9664; Back to Darb · رجوع</a>
 </div>
 <div class="panel hide" id="end">
@@ -344,11 +344,11 @@ $('mute').onclick=()=>{muted=!muted;$('mute').style.opacity=muted?.45:1;};
 
 // save
 let SAVE={un:0,st:[0,0,0,0]};try{const j=JSON.parse(localStorage.getItem('dugi_slide')||'null');if(j&&j.st)SAVE.st=j.st;}catch(e){}
-function lessons(){try{if(JSON.parse(localStorage.getItem('darb_unlockAll')||'0'))return 4;const b=JSON.parse(localStorage.getItem('darb_best')||'{}');return Math.min(4,Object.values(b).filter(v=>v>=1).length);}catch(e){return 0;}}
+function lessons(){try{if(JSON.parse(localStorage.getItem('darb_unlockAll')||'0'))return 4;const b=JSON.parse(localStorage.getItem('darb_best')||'{}'),c=JSON.parse(localStorage.getItem('darb_bestC')||'{}');let n=0;for(let i=0;i<20;i++)if((c[i]||0)>=8||(b[i]||0)>=3)n++;return Math.min(4,n);}catch(e){return 0;}}
 SAVE.un=lessons();
 function persist(){try{localStorage.setItem('dugi_slide',JSON.stringify({st:SAVE.st}));}catch(e){}}
 function renderLevels(){SAVE.un=lessons();$('levels').innerHTML=LEVELS.map((L,i)=>{const st=SAVE.st[i]||0,lock=i>=SAVE.un;
-  return `<button class="lv" data-i="${i}" style="background:${L.col}" ${lock?'aria-disabled="true"':''}><span class="n">${i+1}</span><span class="t">${L.name}</span><span class="a" dir="rtl">${L.ar}</span><span class="s">${'★'.repeat(st)}<i>${'★'.repeat(3-st)}</i></span>${lock?`<span class="lock"><b>&#128274;</b>Finish lesson ${i+1}<span dir="rtl">خلّص الدرس ${i+1}</span></span>`:''}</button>`;}).join('');}
+  return `<button class="lv" data-i="${i}" style="background:${L.col}" ${lock?'aria-disabled="true"':''}><span class="n">${i+1}</span><span class="t">${L.name}</span><span class="a" dir="rtl">${L.ar}</span><span class="s">${'★'.repeat(st)}<i>${'★'.repeat(3-st)}</i></span>${lock?`<span class="lock"><b>&#128274;</b>Get 8/10 in ${i+1} lesson${i?'s':''}<span dir="rtl">جاوب ٨ من ١٠ في ${['درس واحد','درسين','٣ دروس','٤ دروس'][i]}</span></span>`:''}</button>`;}).join('');}
 $('levels').addEventListener('click',e=>{const b=e.target.closest('.lv');if(!b)return;const i=+b.dataset.i;if(i>=SAVE.un){b.animate&&b.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'none'}],{duration:240});return;}play(i);});
 renderLevels();
 
@@ -431,7 +431,7 @@ function update(dt){time+=dt;inv-=dt;
 function finish(){state='end';endT=0;pop('HOME!','البيت!');tone(523,1046,.5,'triangle',.08);setTimeout(()=>tone(659,1318,.5,'triangle',.08),180);setTimeout(()=>tone(784,1568,.7,'triangle',.08),360);
   const st=pearls/TOTAL>=.6?3:pearls/TOTAL>=.35?2:1;SAVE.un=lessons();SAVE.st[LVL]=Math.max(SAVE.st[LVL]||0,st);persist();const nx=LVL+1<LEVELS.length?LEVELS[LVL+1]:null;
   $('stars').innerHTML='★'.repeat(st)+'<i>'+'★'.repeat(3-st)+'</i>';$('rp').textContent=pearls+'/'+TOTAL;$('rt').textContent=time.toFixed(1)+'s';$('rb').textContent=bumps;
-  $('unl').textContent=!nx?'You finished every level!':LVL+1<SAVE.un?'':'Finish lesson '+(LVL+2)+' in Darb to open the next level!';$('next').style.display=LVL+1<LEVELS.length&&LVL+1<SAVE.un?'block':'none';}
+  $('unl').textContent=!nx?'You finished every level!':LVL+1<SAVE.un?'':'Get 8 out of 10 in another Darb lesson to open the next level!';$('next').style.display=LVL+1<LEVELS.length&&LVL+1<SAVE.un?'block':'none';}
 
 const tmp=new THREE.Vector3(),tmp2=new THREE.Vector3();let last=performance.now(),T=0;
 buildLevel(0);reset();

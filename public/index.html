@@ -149,6 +149,7 @@ h2{font-size:20px;margin:26px 0 10px}
       <div class="big" id="endT"></div>
       <div class="stars" id="endS"></div>
       <div id="endN" style="font-size:20px;font-weight:700"></div>
+      <div id="endSl" style="max-width:360px;margin:6px auto 0"></div>
       <div class="btns">
         <button class="btn" id="nextB" data-t="next"></button>
         <button class="btn w" id="retryB" data-t="retry"></button>
@@ -190,7 +191,7 @@ const T={
 en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The highway',world2:'World 2 · The corniche',locked:'Get 1 star on the World 1 boss run to unlock',write:'Write your answer here',paused:'Paused',resume:'Resume',home:'Home',retry:'Try again',next:'Next level',go:'GO!',oops:'Oops!',ready:'Ready?',lang:'عربي',of:n=>n+' of '+Q+' correct',
  titles:['Keep practising!','Good start!','Great job!','Amazing driving!'],soon:'Soon',play:'Play now',
  modes:['Highway math','Arabic letters','Souq change','English words'],
- again:'Try again!',slide:'Dugi\'s Big Slide',slideOpen:n=>n+' of 4 slide levels open',slideLock:'Finish a lesson to open level 1',
+ again:'Try again!',slide:'Dugi\'s Big Slide',slideOpen:n=>n+' of 4 slide levels open',slideLock:'Get 8 out of 10 in a lesson to open it',slideNew:n=>'You opened Dugi\'s slide level '+n+'!',slideHint:'Get 8 out of 10 to open a new Dugi\'s slide level!',
  lv:['Add to 5','Add to 10','Take away','Mix to 10','Add to 20','Take away 20','Mix to 20','×2 ×5 ×10','Times tables','Boss run',
   'Add to 50','Take away 50','Mix to 50','×6 ×7','×8 ×9','All tables','Share by 2–5','Share by 2–10','× and ÷','Boss run'],
  teach:'Teach Darb your handwriting',teachAgain:'Teach Darb your handwriting again',teachSub:'Write each number the way you normally do.',clear:'Clear',nextD:'Next',later:'Later',parents:'Parents',gateT:'For grown-ups',gateQ:(a,b)=>'What is '+a+' × '+b+'?',check:'Check',pT:'Parent area',pTime:'Minutes played',pQ:'Questions answered',pAcc:'Correct',pDays:'Days played',pNeed:'Needs practice',pNone:'Nothing to practise yet.',pMissed:n=>'missed '+n+'×',pLevels:'Levels',pSet:'Settings',music:'Music',sfx:'Sound effects',unlock:'Unlock all levels',reteach:'Teach handwriting again',reset:'Reset all progress',resetSure:'Tap again to erase everything',close:'Close',on:'On',off:'Off',startPlay:'Start playing',times:(a,b)=>'Time '+a+' of '+b,tDone:'Done! Darb knows your handwriting now.',
@@ -198,7 +199,7 @@ en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The
 ar:{brand:'دَرب',tagline:'اكتب الإجابة… وواصل القيادة',world:'العالم ١ · الطريق السريع',world2:'العالم ٢ · الكورنيش',locked:'احصل على نجمة في جولة زعيم العالم ١ لفتح هذا العالم',write:'اكتب إجابتك هنا',paused:'توقف مؤقت',resume:'متابعة',home:'الرئيسية',retry:'حاول مرة أخرى',next:'المستوى التالي',go:'انطلق!',oops:'أوه!',ready:'مستعد؟',lang:'English',of:n=>num(n)+' من '+num(Q)+' صحيحة',
  titles:['واصل التدريب!','بداية جيدة!','عمل رائع!','قيادة مذهلة!'],soon:'قريبًا',play:'العب الآن',
  modes:['رياضيات الطريق','الحروف العربية','فكّة السوق','كلمات إنجليزية'],
- again:'حاول مرة ثانية!',slide:'زلّاقة دوغي',slideOpen:n=>'مفتوح '+num(n)+' من '+num(4)+' مراحل',slideLock:'خلّص درسًا لتفتح المرحلة ١',
+ again:'حاول مرة ثانية!',slide:'زلّاقة دوغي',slideOpen:n=>'مفتوح '+num(n)+' من '+num(4)+' مراحل',slideLock:'جاوب ٨ من ١٠ في درس عشان تفتحها',slideNew:n=>'فتحت مرحلة '+num(n)+' في زلّاقة دوغي!',slideHint:'جاوب ٨ من ١٠ عشان تفتح مرحلة جديدة في زلّاقة دوغي!',
  lv:['جمع حتى ٥','جمع حتى ١٠','طرح','مزيج حتى ١٠','جمع حتى ٢٠','طرح حتى ٢٠','مزيج حتى ٢٠','×٢ ×٥ ×١٠','جدول الضرب','جولة الزعيم',
   'جمع حتى ٥٠','طرح حتى ٥٠','مزيج حتى ٥٠','×٦ ×٧','×٨ ×٩','كل الجداول','قسمة على ٢–٥','قسمة على ٢–١٠','ضرب وقسمة','جولة الزعيم'],
  teach:'علّم اللعبة خطّك',teachAgain:'علّم اللعبة خطّك من جديد',teachSub:'اكتب كل رقم بالطريقة التي تكتبه بها عادةً.',clear:'مسح',nextD:'التالي',later:'لاحقاً',parents:'للوالدين',gateT:'للكبار فقط',gateQ:(a,b)=>'كم يساوي '+num(a)+' × '+num(b)+'؟',check:'تحقق',pT:'منطقة الوالدين',pTime:'دقائق اللعب',pQ:'أسئلة مُجابة',pAcc:'نسبة الصح',pDays:'أيام اللعب',pNeed:'يحتاج تدريب',pNone:'لا يوجد شيء يحتاج تدريباً بعد.',pMissed:n=>'أخطأ '+num(n)+' مرة',pLevels:'المستويات',pSet:'الإعدادات',music:'الموسيقى',sfx:'المؤثرات الصوتية',unlock:'فتح كل المستويات',reteach:'إعادة تعليم الخط',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',close:'إغلاق',on:'تشغيل',off:'إيقاف',startPlay:'ابدأ اللعب',times:(a,b)=>'المرة '+num(a)+' من '+num(b),tDone:'تمّ! اللعبة تعرف خطّك الآن.',
@@ -321,7 +322,7 @@ function applyLang(){
 }
 function renderHome(){
   const L=T[lang],best=S.get('best',{});
-  {const n=S.get('unlockAll',0)?4:Math.min(4,Object.values(best).filter(v=>v>=1).length);$('#slideS').textContent=n?L.slideOpen(n):L.slideLock;}
+  {const n=slideN();$('#slideS').textContent=n?L.slideOpen(n):L.slideLock;}
   $('#modes').innerHTML=L.modes.map((m,i)=>`<button class="mode ${i?'lock':'act'}" data-m="${i}"><span class="ic">${MODEIC[i]}</span><span><b>${m}</b><small>${i?L.soon:L.play}</small></span></button>`).join('');
   const lvB=i=>{const s=best[i]||0;return`<button class="lv ${i%10===9?'boss':''} ${s?'done':''}" data-l="${i}"><span class="n">${num(i%10+1)}</span><span class="s"><b>${'★'.repeat(s)}</b>${'★'.repeat(3-s)}</span><span class="t">${L.lv[i]}</span></button>`};
   $('#levels').innerHTML=LEVELS.slice(0,10).map((l,i)=>lvB(i)).join('');
@@ -329,6 +330,7 @@ function renderHome(){
 }
 $('#levels').addEventListener('click',e=>{const b=e.target.closest('.lv');if(b)startLevel(+b.dataset.l)});
 $('#levels2').addEventListener('click',e=>{const b=e.target.closest('.lv');if(b&&w2Open())startLevel(+b.dataset.l)});
+function slideN(){if(S.get('unlockAll',0))return 4;const b=S.get('best',{}),c=S.get('bestC',{});let n=0;for(let i=0;i<20;i++)if((c[i]||0)>=8||(b[i]||0)>=3)n++;return Math.min(4,n)}
 function w2Open(){return (S.get('best',{})[9]||0)>=1||S.get('unlockAll',0)}
 $('#modes').addEventListener('click',e=>{const b=e.target.closest('.mode');if(b&&b.dataset.m==='0')startLevel(0)});
 $('#langB').onclick=()=>{lang=lang==='en'?'ar':'en';S.set('lang',lang);applyLang()};
@@ -394,6 +396,9 @@ function finish(){
   st.phase='end';$('#qcard').classList.remove('on');
   const c=st.correct,s=c>=9?3:c>=7?2:c>=5?1:0,best=S.get('best',{});
   if(s>(best[st.li]||0)){best[st.li]=s;S.set('best',best)}
+  {const n0=slideN(),bc=S.get('bestC',{});if(c>(bc[st.li]||0)){bc[st.li]=c;S.set('bestC',bc)}const n1=slideN(),e=$('#endSl'),L=T[lang];
+   if(n1>n0){e.innerHTML='<a class="slideC" href="slide.html"><span class="dg"></span><span><b>'+L.slideNew(n1)+'</b><small>'+L.slide+'</small></span><span class="go">&#9654;</span></a>'}
+   else if(c<8&&n1<4){e.innerHTML='<p class="note">'+L.slideHint+'</p>'}else e.innerHTML=''}
   $('#endT').textContent=T[lang].titles[s];
   $('#endS').innerHTML='<b>'+'★'.repeat(s)+'</b>'+'★'.repeat(3-s);
   $('#endN').textContent=T[lang].of(c);
@@ -667,7 +672,7 @@ $('#parW').addEventListener('click',e=>{const g=e.target.closest('[data-g]'),b=e
   if(p==='close'){applyLang();show('home');return}
   if(p==='music'){S.set('music',S.get('music',1)?0:1);musIcon()}else if(p==='sfx'){S.set('sfx',S.get('sfx',1)?0:1)}else if(p==='unlock'){S.set('unlockAll',S.get('unlockAll',0)?0:1)}
   else if(p==='reteach'){teachStart();return}
-  else if(p==='reset'){if(!resetArm){resetArm=true}else{['best','stats','mine_en','mine_ar','teachSkip_en','teachSkip_ar'].forEach(k=>{try{localStorage.removeItem('darb_'+k)}catch(_){}});loadMine();resetArm=false}}
+  else if(p==='reset'){if(!resetArm){resetArm=true}else{['best','bestC','stats','mine_en','mine_ar','teachSkip_en','teachSkip_ar'].forEach(k=>{try{localStorage.removeItem('darb_'+k)}catch(_){}});loadMine();resetArm=false}}
   renderParent()});
 /* ---------- teach your handwriting ---------- */
 const tp=$('#tPad'),tc=tp.getContext('2d');let tS=[],tCur=null,tI=0,tSeq=[];
