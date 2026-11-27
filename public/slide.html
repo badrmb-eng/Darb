@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Dugi's Big Slide · Darb</title>
+<title>Fofo's Big Slide · Darb</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&display=swap" rel="stylesheet">
 <style>
 /* VOICE: bright, bouncy kids' arcade, Darb slide mode
    IDEA: a toy-box Bahrain where rooftops, souq awnings, streets and pipes are one big slide
-   PICTURE: the live 3D game fills the screen; Dugi the baby dugong is the star
+   PICTURE: the live 3D game fills the screen; Fofo the baby dugong (or Jojo the pufferfish) is the star
    COLOUR and TYPE: sky blue, sand, sea turquoise, pearl white, coral accent; Baloo Bhaijaan 2
    LAYOUT: full-screen canvas, pill HUD on top, rounded cards for level select and finish */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -47,6 +47,12 @@ h1{font-size:36px;line-height:1.02;font-weight:800;color:#0e4f7a}
 .go:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
 .go:focus-visible,#mute:focus-visible{outline:3px solid #0e4f7a;outline-offset:3px}
 .row{display:flex;gap:10px}.row .go{flex:1}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 2px}
+.pick button{display:flex;align-items:center;gap:10px;min-height:58px;padding:8px 10px;border:3px solid #0e4f7a;border-radius:16px;background:#fff;color:#0e4f7a;font:800 17px/1.1 "Baloo Bhaijaan 2",sans-serif;cursor:pointer;text-align:start}
+.pick button small{display:block;font-weight:600;font-size:14px}
+.pick button[aria-pressed=true]{background:#ffe9a8;box-shadow:0 4px 0 #0e4f7a}
+.pick .av{width:34px;height:30px;flex:none;border:3px solid #163447;border-radius:50% 50% 45% 45%;position:relative}
+.pick .av:before,.pick .av:after{content:'';position:absolute;top:7px;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:inset 1px 1px 0 2px #163447}.pick .av:before{left:6px}.pick .av:after{right:6px}
 .hint{display:flex;justify-content:center;gap:14px;margin-top:8px;font-size:14px;color:#4b7590;flex-wrap:wrap}
 .hint b{color:#0e4f7a}
 .link{border:0;background:none;color:#7c97a8;font:13px inherit;text-decoration:underline;margin-top:6px;min-height:32px;cursor:pointer}
@@ -67,13 +73,14 @@ h1{font-size:36px;line-height:1.02;font-weight:800;color:#0e4f7a}
 </style>
 </head>
 <body>
-<canvas id="c" aria-label="Dugi's Big Slide game"></canvas>
+<canvas id="c" aria-label="Fofo's Big Slide game"></canvas>
 <div id="hud"><div class="pill"><span class="pearl"></span><b id="pc">0</b></div><div class="prog"><div id="pb"></div><span id="dot"></span></div><span class="goal"></span><button id="mute" aria-label="Sound on or off">&#9835;</button></div>
 <div id="pops"></div>
 <div id="flash"></div>
 <div class="panel" id="start">
-  <h1>Dugi's Big Slide</h1>
-  <div class="ar" dir="rtl">زلّاقة دوغي</div>
+  <h1>Fofo's Big Slide</h1>
+  <div class="ar" dir="rtl">زلّاقة فوفو</div>
+  <div class="pick" id="pick"><button data-c="fofo"><span class="av" style="background:#5f93bf"></span><span>Fofo<small dir="rtl">فوفو</small></span></button><button data-c="puff"><span class="av" style="background:#e25a48;border-radius:50%"></span><span>Jojo<small dir="rtl">جوجو</small></span></button></div>
   <div class="lvls" id="levels"></div>
   <div class="hint"><span><b>Swipe</b> to steer</span><span><b>Tap</b> to jump</span><span><b>Grab</b> pearls</span></div>
   <div class="tag">Get 8 out of 10 in a Darb lesson to open each level.<br><span dir="rtl">جاوب ٨ من ١٠ في دروس دَرب عشان تفتح المراحل.</span></div>
@@ -81,7 +88,7 @@ h1{font-size:36px;line-height:1.02;font-weight:800;color:#0e4f7a}
 </div>
 <div class="panel hide" id="end">
   <h1>Home!</h1>
-  <div class="ar" dir="rtl">وصل دوغي البيت!</div>
+  <div class="ar" dir="rtl" id="homeAr">وصل فوفو البيت!</div>
   <div class="stars" id="stars"></div>
   <div class="res"><div><b id="rp">0</b>pearls</div><div><b id="rt">0s</b>time</div><div><b id="rb">0</b>bumps</div></div>
   <div id="unl"></div>
@@ -171,7 +178,7 @@ function lamp(x,z,y){const p=cyl(.12,.15,6,M(0x5c6370),x,(y||0)+3,z,6);add(p);co
 function carMesh(col,L){const g=new THREE.Group();const b=new THREE.Mesh(new THREE.BoxGeometry(L,1.4,2.1),M(col));b.position.y=1.05;b.castShadow=true;g.add(b);const tp=new THREE.Mesh(new THREE.BoxGeometry(L*.55,.9,1.9),M(0xbfe3f3));tp.position.y=2.15;g.add(tp);
   for(const wx of[-L*.32,L*.32])for(const wz of[-1.05,1.05]){const w=cyl(.5,.5,.35,M(0x26303a),wx,.5,wz,12);w.rotation.x=Math.PI/2;g.add(w);}if(NIGHT>0){const hl=new THREE.Mesh(new THREE.BoxGeometry(.2,.35,1.6),new THREE.MeshBasicMaterial({color:0xfff6c0}));hl.position.set(L/2,1.2,0);g.add(hl);}return g;}
 
-// Dugi + mama (shared)
+// hero (Fofo or Jojo) + mama (shared)
 function makeDugong(){const g=new THREE.Group(),body=M(0x5f93bf),dark=M(0x4a7ba6),ink=M(0x163447),white=M(0xffffff);
   const E=(sx,sy,sz,m,x,y,z,ol,par)=>{const e=new THREE.Mesh(new THREE.SphereGeometry(1,28,18),m);e.scale.set(sx,sy,sz);e.position.set(x,y,z);e.castShadow=true;(par||g).add(e);if(ol){const o=new THREE.Mesh(e.geometry,OL);o.scale.setScalar(1.07);e.add(o);}return e;};
   E(1.05,.74,1.45,body,0,.76,.1,1);E(.84,.44,1.26,M(0xcfe6f2),0,.52,0);E(.84,.74,.78,body,0,1.08,-1.12,1);E(.5,.35,.37,M(0x9cc2de),0,.92,-1.76,1);
@@ -180,9 +187,30 @@ function makeDugong(){const g=new THREE.Group(),body=M(0x5f93bf),dark=M(0x4a7ba6
   const fl=[];for(const sd of[-1,1]){const p=new THREE.Group();p.position.set(sd*.92,.6,-.55);g.add(p);E(.62,.13,.3,dark,sd*.5,0,0,1,p);fl.push(p);}
   const tail=new THREE.Group();tail.position.set(0,.6,1.5);g.add(tail);for(const sd of[-1,1]){const f=E(.58,.11,.28,dark,sd*.42,0,.32,1,tail);f.rotation.y=sd*.45;}
   E(.4,.36,.5,body,0,.62,1.25,1);g.userData={fl,tail};return g;}
-const dugi=makeDugong();scene.add(dugi);const DS=.58;
-const mama=makeDugong();mama.scale.setScalar(1.25);mama.rotation.y=Math.PI;scene.add(mama);
-{const bow=new THREE.Group();for(const sd of[-1,1]){const c=new THREE.Mesh(new THREE.ConeGeometry(.3,.6,10),M(0xff7a9c));c.rotation.z=sd*Math.PI/2;c.position.x=sd*.3;bow.add(c);}bow.position.set(.45,1.75,-1.15);mama.add(bow);}
+function makePuffer(){const g=new THREE.Group(),body=M(0xe25a48),dark=M(0xb8402f),ink=M(0x163447),white=M(0xffffff);
+  const E=(sx,sy,sz,m,x,y,z,ol,par)=>{const e=new THREE.Mesh(new THREE.SphereGeometry(1,28,18),m);e.scale.set(sx,sy,sz);e.position.set(x,y,z);e.castShadow=true;(par||g).add(e);if(ol){const o=new THREE.Mesh(e.geometry,OL);o.scale.setScalar(1.07);e.add(o);}return e;};
+  E(1.15,1.05,1.15,body,0,1.15,0,1);E(.95,.6,.95,M(0xffe4d6),0,.75,-.15);
+  for(let i=0;i<26;i++){const u=Math.acos(1-2*(i+.5)/26),v=i*2.4,d=new THREE.Vector3(Math.sin(u)*Math.cos(v),Math.cos(u),Math.sin(u)*Math.sin(v));if(d.z<-.6&&Math.abs(d.y)<.5)continue;
+    const sp=new THREE.Mesh(new THREE.ConeGeometry(.09,.32,6),dark);sp.position.set(d.x*1.18,1.15+d.y*1.08,d.z*1.18);sp.lookAt(d.x*3,1.15+d.y*3,d.z*3);sp.rotateX(Math.PI/2);g.add(sp);}
+  for(const sd of[-1,1]){E(.27*1.05,.29*1.05,.2*1.05,white,sd*.42,1.45,-.98);E(.17*1.05,.19*1.05,.1*1.05,ink,sd*.44,1.47,-1.15);E(.06,.06,.04,white,sd*.39,1.56,-1.23);E(.16,.09,.06,M(0xf5a3b7),sd*.75,1.1,-.95);}
+  E(.2,.14,.1,M(0xf5a3b7),0,.95,-1.12,1);
+  const fl=[];for(const sd of[-1,1]){const p=new THREE.Group();p.position.set(sd*1.15,1.1,0);g.add(p);const f=E(.45,.1,.28,dark,sd*.25,0,0,1,p);fl.push(p);}
+  const tail=new THREE.Group();tail.position.set(0,1.15,1.2);g.add(tail);E(.35,.4,.12,dark,0,0,.12,1,tail);
+  g.userData={fl,tail};return g;}
+const CHAR={fofo:{make:makeDugong,ar:'وصل فوفو البيت!'},puff:{make:makePuffer,ar:'وصل جوجو البيت!'}};
+let curChar='fofo';try{const c=localStorage.getItem('darb_char');if(CHAR[c])curChar=c;}catch(e){}
+let dugi=CHAR[curChar].make();scene.add(dugi);const DS=.58;
+function makeMama(){const m=CHAR[curChar].make();m.scale.setScalar(1.25);m.rotation.y=Math.PI;
+  const bow=new THREE.Group();for(const sd of[-1,1]){const c=new THREE.Mesh(new THREE.ConeGeometry(.3,.6,10),M(0xff7a9c));c.rotation.z=sd*Math.PI/2;c.position.x=sd*.3;bow.add(c);}
+  bow.position.set(.45,curChar==='puff'?2.35:1.75,-1.15);m.add(bow);return m;}
+let mama=makeMama();scene.add(mama);
+function setChar(c){if(!CHAR[c])return;curChar=c;try{localStorage.setItem('darb_char',c);}catch(e){}
+  const p=dugi.position.clone(),r=dugi.rotation.clone();scene.remove(dugi);dugi=CHAR[c].make();dugi.position.copy(p);dugi.rotation.copy(r);scene.add(dugi);
+  const mp=mama.position.clone(),my=mama.userData.y;scene.remove(mama);mama=makeMama();mama.position.copy(mp);mama.userData.y=my;scene.add(mama);
+  document.getElementById('homeAr').textContent=CHAR[c].ar;
+  document.querySelectorAll('#pick button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===c?'true':'false'));}
+setChar(curChar);
+document.getElementById('pick').addEventListener('click',e=>{const b=e.target.closest('button[data-c]');if(b)setChar(b.dataset.c);});
 
 // particles (shared)
 const PT=[],pGeo=new THREE.SphereGeometry(1,8,6);
