@@ -67,6 +67,14 @@ h2{font-size:20px;margin:26px 0 10px}
 .mode.lock{opacity:.55;box-shadow:none;cursor:default}
 .mode.lock .ic{background:var(--soft)}
 .mode.act{outline:3px dashed var(--grn);outline-offset:3px}
+.slideC{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border:3px solid var(--ink);border-radius:16px 12px 18px 13px;background:#27c3d8;color:#fff;text-decoration:none;box-shadow:3px 3px 0 var(--ink);font:inherit}
+.slideC:active{transform:translate(2px,2px);box-shadow:none}
+.slideC .dg{position:relative;width:54px;height:44px;flex:none;border:3px solid var(--ink);border-radius:50% 50% 45% 45%;background:#5f93bf}
+.slideC .dg:before,.slideC .dg:after{content:'';position:absolute;top:12px;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:inset 2px 1px 0 2px #163447}
+.slideC .dg:before{left:12px}.slideC .dg:after{right:12px}
+.slideC b{display:block;font-size:18px;line-height:1.15;color:#fff;text-shadow:1px 1px 0 var(--ink)}
+.slideC small{display:block;font-size:13px;color:#eafcff}
+.slideC .go{margin-inline-start:auto;font-size:22px;font-weight:800}
 .levels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px 8px}
 .lv{border:0;background:none;font:inherit;color:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:0}
 .lv .n{width:56px;height:56px;border:3px solid var(--ink);border-radius:50%;background:#fff;display:grid;place-items:center;font:30px/1 'Gochi Hand','Baloo Bhaijaan 2',cursive;box-shadow:2px 2px 0 var(--ink)}
@@ -125,6 +133,7 @@ h2{font-size:20px;margin:26px 0 10px}
       <div class="top"><div class="brand"><span data-t="brand"></span></div><div style="display:flex;gap:8px"><button class="chip" id="parB" data-t="parents"></button><button class="chip" id="langB"></button></div></div>
       <h1 data-t="tagline"></h1>
       <div class="modes" id="modes"></div>
+      <a class="slideC" id="slideC" href="slide.html"><span class="dg" aria-hidden="true"></span><span><b data-t="slide"></b><small id="slideS"></small></span><span class="go" aria-hidden="true">&#9654;</span></a>
       <h2 data-t="world"></h2>
       <div class="levels" id="levels"></div>
       <h2 data-t="world2"></h2>
@@ -181,6 +190,7 @@ const T={
 en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The highway',world2:'World 2 · The corniche',locked:'Get 1 star on the World 1 boss run to unlock',write:'Write your answer here',paused:'Paused',resume:'Resume',home:'Home',retry:'Try again',next:'Next level',go:'GO!',oops:'Oops!',ready:'Ready?',lang:'عربي',of:n=>n+' of '+Q+' correct',
  titles:['Keep practising!','Good start!','Great job!','Amazing driving!'],soon:'Soon',play:'Play now',
  modes:['Highway math','Arabic letters','Souq change','English words'],
+ slide:'Dugi\'s Big Slide',slideOpen:n=>n+' of 4 slide levels open',slideLock:'Finish a lesson to open level 1',
  lv:['Add to 5','Add to 10','Take away','Mix to 10','Add to 20','Take away 20','Mix to 20','×2 ×5 ×10','Times tables','Boss run',
   'Add to 50','Take away 50','Mix to 50','×6 ×7','×8 ×9','All tables','Share by 2–5','Share by 2–10','× and ÷','Boss run'],
  teach:'Teach Darb your handwriting',teachAgain:'Teach Darb your handwriting again',teachSub:'Write each number the way you normally do.',clear:'Clear',nextD:'Next',later:'Later',parents:'Parents',gateT:'For grown-ups',gateQ:(a,b)=>'What is '+a+' × '+b+'?',check:'Check',pT:'Parent area',pTime:'Minutes played',pQ:'Questions answered',pAcc:'Correct',pDays:'Days played',pNeed:'Needs practice',pNone:'Nothing to practise yet.',pMissed:n=>'missed '+n+'×',pLevels:'Levels',pSet:'Settings',music:'Music',sfx:'Sound effects',unlock:'Unlock all levels',reteach:'Teach handwriting again',reset:'Reset all progress',resetSure:'Tap again to erase everything',close:'Close',on:'On',off:'Off',startPlay:'Start playing',times:(a,b)=>'Time '+a+' of '+b,tDone:'Done! Darb knows your handwriting now.',
@@ -188,6 +198,7 @@ en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The
 ar:{brand:'دَرب',tagline:'اكتب الإجابة… وواصل القيادة',world:'العالم ١ · الطريق السريع',world2:'العالم ٢ · الكورنيش',locked:'احصل على نجمة في جولة زعيم العالم ١ لفتح هذا العالم',write:'اكتب إجابتك هنا',paused:'توقف مؤقت',resume:'متابعة',home:'الرئيسية',retry:'حاول مرة أخرى',next:'المستوى التالي',go:'انطلق!',oops:'أوه!',ready:'مستعد؟',lang:'English',of:n=>num(n)+' من '+num(Q)+' صحيحة',
  titles:['واصل التدريب!','بداية جيدة!','عمل رائع!','قيادة مذهلة!'],soon:'قريبًا',play:'العب الآن',
  modes:['رياضيات الطريق','الحروف العربية','فكّة السوق','كلمات إنجليزية'],
+ slide:'زلّاقة دوغي',slideOpen:n=>'مفتوح '+num(n)+' من '+num(4)+' مراحل',slideLock:'خلّص درسًا لتفتح المرحلة ١',
  lv:['جمع حتى ٥','جمع حتى ١٠','طرح','مزيج حتى ١٠','جمع حتى ٢٠','طرح حتى ٢٠','مزيج حتى ٢٠','×٢ ×٥ ×١٠','جدول الضرب','جولة الزعيم',
   'جمع حتى ٥٠','طرح حتى ٥٠','مزيج حتى ٥٠','×٦ ×٧','×٨ ×٩','كل الجداول','قسمة على ٢–٥','قسمة على ٢–١٠','ضرب وقسمة','جولة الزعيم'],
  teach:'علّم اللعبة خطّك',teachAgain:'علّم اللعبة خطّك من جديد',teachSub:'اكتب كل رقم بالطريقة التي تكتبه بها عادةً.',clear:'مسح',nextD:'التالي',later:'لاحقاً',parents:'للوالدين',gateT:'للكبار فقط',gateQ:(a,b)=>'كم يساوي '+num(a)+' × '+num(b)+'؟',check:'تحقق',pT:'منطقة الوالدين',pTime:'دقائق اللعب',pQ:'أسئلة مُجابة',pAcc:'نسبة الصح',pDays:'أيام اللعب',pNeed:'يحتاج تدريب',pNone:'لا يوجد شيء يحتاج تدريباً بعد.',pMissed:n=>'أخطأ '+num(n)+' مرة',pLevels:'المستويات',pSet:'الإعدادات',music:'الموسيقى',sfx:'المؤثرات الصوتية',unlock:'فتح كل المستويات',reteach:'إعادة تعليم الخط',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',close:'إغلاق',on:'تشغيل',off:'إيقاف',startPlay:'ابدأ اللعب',times:(a,b)=>'المرة '+num(a)+' من '+num(b),tDone:'تمّ! اللعبة تعرف خطّك الآن.',
@@ -310,6 +321,7 @@ function applyLang(){
 }
 function renderHome(){
   const L=T[lang],best=S.get('best',{});
+  {const n=S.get('unlockAll',0)?4:Math.min(4,Object.values(best).filter(v=>v>=1).length);$('#slideS').textContent=n?L.slideOpen(n):L.slideLock;}
   $('#modes').innerHTML=L.modes.map((m,i)=>`<button class="mode ${i?'lock':'act'}" data-m="${i}"><span class="ic">${MODEIC[i]}</span><span><b>${m}</b><small>${i?L.soon:L.play}</small></span></button>`).join('');
   const lvB=i=>{const s=best[i]||0;return`<button class="lv ${i%10===9?'boss':''} ${s?'done':''}" data-l="${i}"><span class="n">${num(i%10+1)}</span><span class="s"><b>${'★'.repeat(s)}</b>${'★'.repeat(3-s)}</span><span class="t">${L.lv[i]}</span></button>`};
   $('#levels').innerHTML=LEVELS.slice(0,10).map((l,i)=>lvB(i)).join('');
@@ -673,4 +685,5 @@ applyLang();fit();requestAnimationFrame(tick);
 if(document.fonts)document.fonts.ready.then(()=>{fit()});
 }
 </script>
+<script>addEventListener('pageshow',e=>{if(e.persisted&&typeof renderHome==='function')renderHome()});</script>
 </body>
