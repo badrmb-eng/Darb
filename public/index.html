@@ -176,7 +176,7 @@ h2{font-size:20px;margin:26px 0 10px}
 {
 const $=s=>document.querySelector(s);
 const S={get(k,d){try{const v=localStorage.getItem('darb_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('darb_'+k,JSON.stringify(v))}catch(e){}}};
-const Q=20;
+const Q=10;
 const T={
 en:{brand:'Darb',tagline:'Write the answer. Keep driving.',world:'World 1 · The highway',world2:'World 2 · The corniche',locked:'Get 1 star on the World 1 boss run to unlock',write:'Write your answer here',paused:'Paused',resume:'Resume',home:'Home',retry:'Try again',next:'Next level',go:'GO!',oops:'Oops!',ready:'Ready?',lang:'عربي',of:n=>n+' of '+Q+' correct',
  titles:['Keep practising!','Good start!','Great job!','Amazing driving!'],soon:'Soon',play:'Play now',
@@ -380,7 +380,7 @@ function judge(ok,miss){
 function next(){st.qi++;if(st.qi>=Q)finish();else newQ()}
 function finish(){
   st.phase='end';$('#qcard').classList.remove('on');
-  const c=st.correct,s=c>=18?3:c>=14?2:c>=10?1:0,best=S.get('best',{});
+  const c=st.correct,s=c>=9?3:c>=7?2:c>=5?1:0,best=S.get('best',{});
   if(s>(best[st.li]||0)){best[st.li]=s;S.set('best',best)}
   $('#endT').textContent=T[lang].titles[s];
   $('#endS').innerHTML='<b>'+'★'.repeat(s)+'</b>'+'★'.repeat(3-s);
