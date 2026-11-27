@@ -9,7 +9,7 @@
 <style>
 /* VOICE: bright, bouncy kids' arcade, Darb slide mode
    IDEA: a toy-box Bahrain where rooftops, souq awnings, streets and pipes are one big slide
-   PICTURE: the live 3D game fills the screen; Fofo the baby dugong (or Jojo the pufferfish) is the star
+   PICTURE: the live 3D game fills the screen; Fofo the baby dugong (or Juju the pufferfish) is the star
    COLOUR and TYPE: sky blue, sand, sea turquoise, pearl white, coral accent; Baloo Bhaijaan 2
    LAYOUT: full-screen canvas, pill HUD on top, rounded cards for level select and finish */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -80,7 +80,7 @@ h1{font-size:36px;line-height:1.02;font-weight:800;color:#0e4f7a}
 <div class="panel" id="start">
   <h1>The Slide</h1>
   <div class="ar" dir="rtl">الزلّاقة</div>
-  <div class="pick" id="pick"><button data-c="fofo"><span class="av" style="background:#5f93bf"></span><span>Fofo<small dir="rtl">فوفو</small></span></button><button data-c="puff"><span class="av" style="background:#e25a48;border-radius:50%"></span><span>Jojo<small dir="rtl">جوجو</small></span></button></div>
+  <div class="pick" id="pick"><button data-c="fofo"><span class="av" style="background:#5f93bf"></span><span>Fofo<small dir="rtl">فوفو</small></span></button><button data-c="puff"><span class="av" style="background:#e25a48;border-radius:50%"></span><span>Juju<small dir="rtl">جوجو</small></span></button></div>
   <div class="lvls" id="levels"></div>
   <div class="hint"><span><b>Swipe</b> to steer</span><span><b>Tap</b> to jump</span><span><b>Grab</b> pearls</span></div>
   <div class="tag">Get 8 out of 10 in a Darb lesson to open each level.<br><span dir="rtl">جاوب ٨ من ١٠ في دروس دَرب عشان تفتح المراحل.</span></div>
@@ -178,7 +178,7 @@ function lamp(x,z,y){const p=cyl(.12,.15,6,M(0x5c6370),x,(y||0)+3,z,6);add(p);co
 function carMesh(col,L){const g=new THREE.Group();const b=new THREE.Mesh(new THREE.BoxGeometry(L,1.4,2.1),M(col));b.position.y=1.05;b.castShadow=true;g.add(b);const tp=new THREE.Mesh(new THREE.BoxGeometry(L*.55,.9,1.9),M(0xbfe3f3));tp.position.y=2.15;g.add(tp);
   for(const wx of[-L*.32,L*.32])for(const wz of[-1.05,1.05]){const w=cyl(.5,.5,.35,M(0x26303a),wx,.5,wz,12);w.rotation.x=Math.PI/2;g.add(w);}if(NIGHT>0){const hl=new THREE.Mesh(new THREE.BoxGeometry(.2,.35,1.6),new THREE.MeshBasicMaterial({color:0xfff6c0}));hl.position.set(L/2,1.2,0);g.add(hl);}return g;}
 
-// hero (Fofo or Jojo) + mama (shared)
+// hero (Fofo or Juju) + mama (shared)
 function makeDugong(){const eyes=[],g=new THREE.Group(),body=M(0x5f93bf),dark=M(0x4a7ba6),ink=M(0x163447),white=M(0xffffff);
   const E=(sx,sy,sz,m,x,y,z,ol,par)=>{const e=new THREE.Mesh(new THREE.SphereGeometry(1,28,18),m);e.scale.set(sx,sy,sz);e.position.set(x,y,z);e.castShadow=true;(par||g).add(e);if(ol){const o=new THREE.Mesh(e.geometry,OL);o.scale.setScalar(1.07);e.add(o);}return e;};
   E(1.05,.74,1.45,body,0,.76,.1,1);E(.84,.44,1.26,M(0xcfe6f2),0,.52,0);E(.84,.74,.78,body,0,1.08,-1.12,1);E(.5,.35,.37,M(0x9cc2de),0,.92,-1.76,1);
